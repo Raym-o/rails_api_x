@@ -1,5 +1,8 @@
+require 'bcrypt'
+
+# Controller for class representing users of web app.
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i[show update destroy]
 
   # GET /users
   def index
@@ -13,9 +16,21 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+  def authenticate
+    @user = User.find_by(username: params[:username])
+                .try(:authenticate, params[:password])
+
+    if @user.nil?
+      render json: @user.errors
+    else
+      render json: @user
+    end
+  end
+
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.password = params[:password]
 
     if @user.save
       render json: @user, status: :created, location: @user
@@ -39,13 +54,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.require(:user).permit(:f_name, :l_name, :username, :email, :password_digest)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def user_params
+    params.require(:user).permit(:f_name, :l_name, :username, :email, :password)
+  end
 end
