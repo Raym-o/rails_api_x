@@ -12,7 +12,7 @@ class ProvincesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create province" do
     assert_difference('Province.count') do
-      post provinces_url, params: { province: { abbr: @province.abbr, address: @province.address, hst_rate: @province.hst_rate, name: @province.name, pst_rate: @province.pst_rate } }, as: :json
+      post provinces_url, params: { province: { abbr: @province.abbr, hst_rate: @province.hst_rate, name: @province.name, pst_rate: @province.pst_rate } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class ProvincesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update province" do
-    patch province_url(@province), params: { province: { abbr: @province.abbr, address: @province.address, hst_rate: @province.hst_rate, name: @province.name, pst_rate: @province.pst_rate } }, as: :json
+    patch province_url(@province), params: { province: { abbr: @province.abbr, hst_rate: @province.hst_rate, name: @province.name, pst_rate: @province.pst_rate } }, as: :json
     assert_response 200
   end
 

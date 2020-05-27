@@ -5,11 +5,9 @@ one:
   abbr: MyString
   pst_rate: 9.99
   hst_rate: 9.99
-  address: 
 
 two:
   name: MyString
   abbr: MyString
   pst_rate: 9.99
   hst_rate: 9.99
-  address: 

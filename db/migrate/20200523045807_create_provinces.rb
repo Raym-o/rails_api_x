@@ -5,7 +5,6 @@ class CreateProvinces < ActiveRecord::Migration[6.0]
       t.string :abbr
       t.decimal :pst_rate
       t.decimal :hst_rate
-      t.referenced :address
 
       t.timestamps
     end

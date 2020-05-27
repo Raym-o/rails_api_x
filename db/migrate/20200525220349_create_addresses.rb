@@ -4,10 +4,9 @@ class CreateAddresses < ActiveRecord::Migration[6.0]
       t.string :line_1
       t.string :line_2
       t.string :city
-      t.string :province
       t.string :postal_code
       t.references :user, null: false, foreign_key: true
-
+      t.references :province, null: false, foreign_key: true
       t.timestamps
     end
   end

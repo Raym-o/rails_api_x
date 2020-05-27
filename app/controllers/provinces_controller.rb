@@ -46,6 +46,6 @@ class ProvincesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def province_params
-      params.require(:province).permit(:name, :abbr, :pst_rate, :hst_rate, :address)
+      params.require(:province).permit(:name, :abbr, :pst_rate, :hst_rate)
     end
 end

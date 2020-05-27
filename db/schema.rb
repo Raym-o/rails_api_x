@@ -30,11 +30,12 @@ ActiveRecord::Schema.define(version: 2020_05_25_220349) do
     t.string "line_1"
     t.string "line_2"
     t.string "city"
-    t.string "province"
     t.string "postal_code"
     t.integer "user_id", null: false
+    t.integer "province_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["province_id"], name: "index_addresses_on_province_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
@@ -50,6 +51,15 @@ ActiveRecord::Schema.define(version: 2020_05_25_220349) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "provinces", force: :cascade do |t|
+    t.string "name"
+    t.string "abbr"
+    t.decimal "pst_rate"
+    t.decimal "hst_rate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "f_name"
     t.string "l_name"
@@ -60,5 +70,6 @@ ActiveRecord::Schema.define(version: 2020_05_25_220349) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "addresses", "provinces"
   add_foreign_key "addresses", "users"
 end
