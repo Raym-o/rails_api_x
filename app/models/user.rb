@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_one :address
+  has_many :orders
 
   validates :f_name, :l_name, presence: true
   validates :username, :email, uniqueness: true

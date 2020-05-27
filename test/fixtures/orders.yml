@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  price: 9.99
+  gst: 9.99
+  pst: 9.99
+  hst: 9.99
+  user: one
+  stripe_id: MyString
+
+two:
+  status: MyString
+  price: 9.99
+  gst: 9.99
+  pst: 9.99
+  hst: 9.99
+  user: two
+  stripe_id: MyString
