@@ -1,7 +1,7 @@
 require 'bcrypt'
 
 # Controller for class representing users of web app.
-class UsersController < ApplicationController
+class UsersController < ApiController
   before_action :set_user, only: %i[show update destroy]
 
   # GET /users
