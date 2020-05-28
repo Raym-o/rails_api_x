@@ -36,6 +36,10 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'
   # End moved here by Me
+  # Added by Me
+  gem 'httparty', '~> 0.18.0'
+  gem 'pry', '~> 0.13.1'
+  # END Added by Me
 end
 
 group :development do

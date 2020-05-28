@@ -1,4 +1,4 @@
-# Represents the mailing and billing address of a user.
+# Represents the mailing and billing address of a User.
 class Address < ApplicationRecord
   belongs_to :user
   belongs_to :province

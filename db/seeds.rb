@@ -20,8 +20,7 @@ provinces = [
   { name: 'Yukon', abbr: 'YT', pst_rate: 0, hst_rate: 0 }
 ]
 
-provinces.count.times do
-  p = provinces.shift
+provinces.each do |p|
   Province.create(
     name: p[:name],
     abbr: p[:abbr],
