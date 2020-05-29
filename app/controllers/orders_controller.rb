@@ -1,5 +1,6 @@
+# Controller for Orders of Products from Users in the web app
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order, only: %i[show update destroy]
 
   # GET /orders
   def index
@@ -39,13 +40,14 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def order_params
-      params.require(:order).permit(:status, :price, :gst, :pst, :hst, :user_id, :stripe_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def order_params
+    params.require(:order).permit(:status, :price, :gst, :pst, :hst, :user_id, :stripe_id)
+  end
 end

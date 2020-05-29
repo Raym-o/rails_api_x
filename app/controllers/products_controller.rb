@@ -1,4 +1,4 @@
-# Representation of Product presented in ecommerce web app
+# Controller for Products presented in ecommerce web app
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show update destroy]
 
