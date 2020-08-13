@@ -52,6 +52,23 @@ class UsersController < ApiController
     end
   end
 
+  def updateaddress
+    @user = User.find(user_params[:id])
+    new_address = Address.new(
+      line_1: params[:address][:line_1],
+      line_2: params[:address][:line_2],
+      city: params[:address][:city],
+      postal_code: params[:address][:postal_code],
+      province_id: params[:address][:province_id]
+    )
+    @user.address = new_address
+    if @user.save
+      render json: @user, status: :accepted, location: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /users/1
   def destroy
     @user.destroy
@@ -66,6 +83,6 @@ class UsersController < ApiController
 
   # Only allow a trusted parameter "white list" through.
   def user_params
-    params.require(:user).permit(:f_name, :l_name, :username, :email, :password)
+    params.require(:user).permit(:id, :f_name, :l_name, :username, :email, :password)
   end
 end

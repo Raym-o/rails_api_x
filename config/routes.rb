@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :provinces
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  put '/updateaddress', to: 'users#updateaddress'
   post '/users/authenticate', to: 'users#authenticate'
   resources :users do
     resources :addresses
