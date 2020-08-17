@@ -6,5 +6,5 @@ class Product < ApplicationRecord
   has_many :collections, through: :collection_products
   accepts_nested_attributes_for :collection_products, allow_destroy: true
 
-  has_many_attached :image
+  has_many_attached :images
 end
