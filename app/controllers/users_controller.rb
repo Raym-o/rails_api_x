@@ -25,7 +25,7 @@ class UsersController < ApiController
                 .try(:authenticate, params[:password])
 
     if @user.nil?
-      render json: @user.errors
+      render json: {}, status: :not_found
     else
       render json: @user, include: { address: {} }
     end
@@ -63,7 +63,7 @@ class UsersController < ApiController
     )
     @user.address = new_address
     if @user.save
-      render json: @user, status: :accepted, location: @user
+      render json: @user, include: { address: {} }, status: :accepted, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
     end
