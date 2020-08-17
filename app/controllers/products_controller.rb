@@ -4,14 +4,18 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
+    @products = Product.with_attached_images.all
 
-    render json: @products
+    render json: @products, include: {
+      images_blobs: { only: %i[id key filename content_type created_at] }
+    }
   end
 
   # GET /products/1
   def show
-    render json: @product
+    render json: @product, include: {
+      images_blobs: { only: %i[id key filename content_type created_at] }
+    }
   end
 
   # POST /products
@@ -48,6 +52,6 @@ class ProductsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def product_params
-    params.require(:product).permit(:title, :description, :price)
+    params.require(:product).permit(:title, :description, :price, :images)
   end
 end
