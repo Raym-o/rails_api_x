@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   resources :pages
   resources :collections
   resources :orders
-  resources :products
   resources :provinces
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  resources :products
   put '/updateaddress', to: 'users#updateaddress'
   post '/users/authenticate', to: 'users#authenticate'
   resources :users do
