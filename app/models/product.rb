@@ -7,4 +7,6 @@ class Product < ApplicationRecord
   accepts_nested_attributes_for :collection_products, allow_destroy: true
 
   has_many_attached :images
+
+  scope :with_eager_loaded_images, -> { eager_load(images_attachments: :blob) }
 end
