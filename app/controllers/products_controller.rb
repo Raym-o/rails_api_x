@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.with_attached_images.all
+    @products = Product.with_attached_images.limit(10).offset(params[:offset])
 
     render json: @products, include: {
       images_blobs: { only: %i[id key filename content_type created_at] }
@@ -41,6 +41,11 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   def destroy
     @product.destroy
+  end
+
+  def count
+    pc = Product.count
+    render json: { count: pc }
   end
 
   private
