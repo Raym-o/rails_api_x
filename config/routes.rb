@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :provinces
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  get '/get_images/:id', to: 'products#get_images'
   get '/productcount', to: 'products#count'
   resources :products
   put '/updateaddress', to: 'users#updateaddress'

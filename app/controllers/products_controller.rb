@@ -6,18 +6,35 @@ class ProductsController < ApplicationController
   def index
     @products = Product.with_attached_images.limit(10).offset(params[:offset])
 
-    render json: @products, include: {
-      images_blobs: { only: %i[id key filename content_type created_at] }
-    }
+    images_url_array = []
+    @products.each do |product|
+      single_products_images = []
+      product.images.each do |image|
+        single_products_images.push(url_for(image))
+      end
+      images_url_array.push(single_products_images)
+    end
+
+    final_products = []
+    @products.each do |product|
+      temp_product = {}
+      temp_product[:product] = product
+
+      temp_product[:images_urls] = images_url_array.pop
+      final_products.push(temp_product)
+    end
+
+    render json: final_products
   end
 
   # GET /products/1
   def show
     render json: @product, include: {
-      images_blobs: { only: %i[id key filename content_type created_at] }
+      images_blobs: {}
     }
   end
 
+  # images_blobs: { only: %i[id key filename content_type created_at] }
   # POST /products
   def create
     @product = Product.new(product_params)
@@ -43,10 +60,23 @@ class ProductsController < ApplicationController
     @product.destroy
   end
 
+  # GET /productcount
   def count
     pc = Product.count
     render json: { count: pc }
   end
+
+  # # GET /get_images
+  # def get_images
+  #   @product = Product.find(params[:id])
+
+  #   images_url_array = []
+  #   @product.images.each do |image|
+  #     images_url_array.push(url_for(image))
+  #   end
+
+  #   render json: images_url_array
+  # end
 
   private
 
