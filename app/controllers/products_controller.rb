@@ -19,8 +19,9 @@ class ProductsController < ApplicationController
     @products.each do |product|
       temp_product = {}
       temp_product[:product] = product
-
-      temp_product[:images_urls] = images_url_array.pop
+      # temp_array = []
+      # temp_array.push(images_url_array.pop)
+      temp_product[:images_urls] = images_url_array.slice!(0)
       final_products.push(temp_product)
     end
 
