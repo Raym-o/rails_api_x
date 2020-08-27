@@ -1,3 +1,5 @@
+require 'mini_magick'
+
 # Controller for Products presented in ecommerce web app
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show update destroy]
@@ -10,7 +12,7 @@ class ProductsController < ApplicationController
     @products.each do |product|
       single_products_images = []
       product.images.each do |image|
-        single_products_images.push(url_for(image))
+        single_products_images.push(url_for(image.variant(resize: '200x200!').processed))
       end
       images_url_array.push(single_products_images)
     end
@@ -19,8 +21,6 @@ class ProductsController < ApplicationController
     @products.each do |product|
       temp_product = {}
       temp_product[:product] = product
-      # temp_array = []
-      # temp_array.push(images_url_array.pop)
       temp_product[:images_urls] = images_url_array.slice!(0)
       final_products.push(temp_product)
     end
@@ -35,7 +35,6 @@ class ProductsController < ApplicationController
     }
   end
 
-  # images_blobs: { only: %i[id key filename content_type created_at] }
   # POST /products
   def create
     @product = Product.new(product_params)
@@ -80,6 +79,10 @@ class ProductsController < ApplicationController
   # end
 
   private
+
+  def thumbnail
+    url_for(images.first.variant(resize: '200x200!').processed)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_product
