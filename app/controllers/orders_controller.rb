@@ -1,29 +1,41 @@
 # Controller for Orders of Products from Users in the web app
-class OrdersController < ApplicationController
+class OrdersController < ApiController
   before_action :set_order, only: %i[show update destroy]
 
   # GET /orders
   def index
     @orders = Order.all
 
-    render json: @orders
+    render json: @orders, include: { products: {
+      only: %i[id title price]
+    } }
   end
 
   # GET /orders/1
   def show
-    render json: @order
+    render json: @order, include: { products: {
+      only: %i[id title price]
+    } }
   end
 
   # POST /orders
   def create
-    puts order_params
-    # @order = Order.new(order_params)
+    @order = Order.new(order_params)
 
-    # if @order.save
-    #   render json: @order, status: :created, location: @order
-    # else
-    #   render json: @order.errors, status: :unprocessable_entity
-    # end
+    params['products'].each do |product|
+      @order.order_products.build(
+        product_id: product[:id],
+        order_id: @order.id,
+        price: product[:price],
+        quantity: product[:quantity].nil? ? 1 : product[:quantity]
+      )
+    end
+
+    if @order.save!
+      render json: @order, status: :created, location: @order
+    else
+      render json: @order.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /orders/1
@@ -49,6 +61,6 @@ class OrdersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def order_params
-    params.require(:order).permit(:status, :price, :gst, :pst, :hst, :user_id, :stripe_id)
+    params.require(:order).permit(:status, :price, :gst, :pst, :hst, :user_id, :stripe_id, :products)
   end
 end

@@ -1,5 +1,5 @@
 # Controller for Provinces and territories of Canada, represented in the web app
-class ProvincesController < ApplicationController
+class ProvincesController < ApiController
   before_action :set_province, only: %i[show update destroy]
 
   # GET /provinces

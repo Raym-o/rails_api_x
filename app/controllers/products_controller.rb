@@ -1,7 +1,7 @@
 require 'mini_magick'
 
 # Controller for Products presented in ecommerce web app
-class ProductsController < ApplicationController
+class ProductsController < ApiController
   before_action :set_product, only: %i[show update destroy]
 
   # GET /products

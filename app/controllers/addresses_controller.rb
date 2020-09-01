@@ -1,5 +1,5 @@
 # Controller for Address of User, possibly unneeded
-class AddressesController < ApplicationController
+class AddressesController < ApiController
   before_action :set_address, only: %i[show update destroy]
 
   # GET /addresses

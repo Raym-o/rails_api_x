@@ -1,5 +1,5 @@
 # Controller for Collection categories of Products in web app
-class CollectionsController < ApplicationController
+class CollectionsController < ApiController
   before_action :set_collection, only: %i[show update destroy]
 
   # GET /collections
