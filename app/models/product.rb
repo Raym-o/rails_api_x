@@ -9,4 +9,8 @@ class Product < ApplicationRecord
   has_many_attached :images
 
   scope :with_eager_loaded_images, -> { eager_load(images_attachments: :blob) }
+
+  validates :title, :price, presence: true
+  validates :title, uniqueness: true
+  validates :title, length: { maximum: 100 }
 end
