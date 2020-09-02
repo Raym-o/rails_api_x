@@ -6,18 +6,23 @@ class UsersController < ApiController
 
   # GET /users
   def index
-    @users = User.includes(:address).all
+    @users = User.includes(:address, :orders).all
 
     render json: @users, include: {
       address: {
         only: %i[line_1 line_2 city postal_code province_id]
+      },
+      orders: {
       }
     }
   end
 
   # GET /users/1
   def show
-    render json: @user, include: { address: {} }
+    render json: @user, include: {
+      address: {},
+      orders: {}
+    }
   end
 
   def authenticate
@@ -27,7 +32,10 @@ class UsersController < ApiController
     if @user.nil?
       render json: {}, status: :not_found
     else
-      render json: @user, include: { address: {} }
+      render json: @user, include: {
+        address: {},
+        orders: {}
+      }
     end
   end
 
